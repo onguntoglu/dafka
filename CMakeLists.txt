@@ -11,6 +11,8 @@ project(dafka)
 enable_language(C)
 enable_testing()
 
+set(CMAKE_BUILD_TYPE Release)
+
 set(SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}")
 set(CMAKE_EXPORT_COMPILE_COMMANDS 1)
 # Select flags
@@ -53,7 +55,7 @@ endif ()
 if (${CMAKE_BUILD_TYPE} STREQUAL "Debug")
     OPTION (ENABLE_DRAFTS "Build and install draft classes and methods" ON)
 else ()
-    OPTION (ENABLE_DRAFTS "Build and install draft classes and methods" OFF)
+    OPTION (ENABLE_DRAFTS "Build and install draft classes and methods" ON)
 endif ()
 IF (ENABLE_DRAFTS)
     ADD_DEFINITIONS (-DDAFKA_BUILD_DRAFT_API)
@@ -629,6 +631,7 @@ target_link_libraries(
     ${OPTIONAL_LIBRARIES_STATIC}
 )
 endif()
+if(CUCUMBER_FOUND)
 add_executable(
     dafka_cucumber_selftest
     "${SOURCE_DIR}/src/dafka_cucumber_selftest.c"
@@ -653,6 +656,7 @@ target_link_libraries(
     ${OPTIONAL_LIBRARIES}
     ${OPTIONAL_LIBRARIES_STATIC}
 )
+endif()
 endif()
 add_executable(
     dafka_selftest
